@@ -56,6 +56,7 @@
 	<!-- {{{ Paths -->
 	<path id="project.class.path">
 		<pathelement location="${jedit.install.dir}/jedit.jar"/>
+		<pathelement location="${install.dir}/GnuRegexp.jar"/>
 		<pathelement location="${src.dir}"/>
 	</path>
 	<!-- }}} -->
