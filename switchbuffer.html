@@ -1,0 +1,124 @@
+<html>
+	<head>
+		<title>Usage Documentation for SwitchBuffer</title>
+	</head>
+	<body>
+		<table width="100%" cellspacing="0" cellpadding="0">
+			<tr>
+				<td bgcolor="#ccccff"><font size="5"><b>SwitchBuffer</b></font></td>
+				<td bgcolor="#ccccff" align="right">
+					<font size="2">Lee Turner<br>lee@leeturner.org</font>
+				</td>
+			</tr>
+		</table>
+		<h2>Introduction</h2>
+		The SwitchBuffer plugin is a must for any programmer who hates to take his/her hands
+		off the keyboard, while wanting to switch buffers.  This plugin is similar to the
+		iswitchb library in emacs. The underlying theme behind each, is that you can type
+		part of a buffer name and only those buffers whose names contain the string you have
+		typed, are shown in the buffer list. You can then hit enter to switch to the first buffer
+		in that list.
+
+		<h2>Usage</h2>
+		Nothing much to it.  You open the SwitchBuffer dialog by selecting the 'Show Switch Buffer' menu item
+		from the SwitchBuffer menu.  The dialog will list all the buffers that you have currently have open.
+		The textbox at the top of the dialog (which is given focus automatically) is there to type the name
+		of the buffer that you want to switch to.  The list of buffers below is correspondingly updated to
+		feature only those buffers whose names contain what you have typed.
+		The first buffer in the list is always selected. Hit <b>Enter</b> or click on the buffer name with
+		the <b>left mouse button</b> to switch to that buffer.  Use the <b>up/down</b> arrow keys or the
+		shortcuts <b>alt+i / alt+k</b> to select the previous and next buffers respectively. Buffers can
+		also be closed directly from within the SwitchBuffer dialog by pressing <b>ctrl+w</b> or by clicking
+		on the buffer name with the <b>right mouse button</b>.
+
+		<p>SwitchBuffer also provides another way of switching buffers.  This is called a 'File Suffix Switch'.
+		As the name suggests, this options allows you to switch buffers based on the suffix (the extension)
+		of the buffer name.  If you select this option from the SwitchBuffer menu, SwitchBuffer with take the
+		name of the currently active buffer and attempt to find any other open buffers with the same first
+		part of the file name (the part before the dot '.') but with different extensions (e.g index.html
+		and index.js).  If only one other buffer is found, SwitchBuffer will switch to that buffer automatically,
+		if more than one is found, the SwitchBuffer dialog is displayed to allow you to choose the buffer that you
+		want.</p>
+
+		<p>SwitchBuffer works really well if you assign either of the above options to a shortcut in the
+		jEdit 'Global Options' so that you can operate it from the keyboard.</p>
+
+		<p>If configured to do so (see below), SwitchBuffer also remembers your previous buffer and displays
+		that buffer name in the text field, so you can simply switch to the previous buffer that you were in
+		by hitting <b>Enter</b>.  This is configurable to allow SwitchBuffer to only remember the previous buffer
+		if switched using SwitchBuffer, or to allow it to remember the previous buffer you were using no matter
+		how it was accessed (by using jEdit's buffer switcher for example).  The SwitchBuffer dialog also
+		remembers the size and position that the user previously set for it.</p>
+
+		<h2>Options</h2>
+		<h3>General options:</h3>
+		<ul>
+			<li><b>On loss of focus, hide switchbuffer window: </b> This option determines what the SwitchBuffer
+			dialog does when it looses focus. If ticked, the dialog will disappear if it looses focus, if not,
+			the dialog will remain visible.  This option can come in useful if you use an environment where the
+			mouse cursor determines the window that gets the focus.</li>
+		</ul>
+		<h3>Filename matching options:</h3>
+		There are a number of filename matching options available.  These are as follows:
+		<ul>
+			<li><b>Beginning of filename: </b> This will only match filenames from the beginning of the name.  For example,
+			if I have four files open - 'Shape.java', 'Circle.java', 'TestCircle.java' and 'build.xml' and I type 'Circle'
+			into SwitchBuffer, only the file 'Circle.java' will be matched.</li>
+			<li><b>Anywhere in filename: </b> This will match filenames from anywhere in the name.  For example,
+			if I have the same four files open - 'Shape.java', 'Circle.java', 'TestCircle.java' and 'build.xml' and I
+			type 'Circle' into SwitchBuffer, both 'Circle.java' and 'TestCircle.java' will be matched.</li>
+			<li><b>Sub Sequence match: </b> This option implements the subsequence algorithm : The empty string is a
+			subsequence match of any string.  The string aX where a is a character and X is a string is a subsequence
+			match of Y if a occurs in Y, and the substring of Y after the first occurrence of a is a subsequence match of X.</li>
+		</ul>
+		<ul>
+			<li><b>Ignore case: </b> This is default behavior. The case of the string you enter is ignored.</li>
+		</ul>
+		<h3>File list options:</h3>
+		<ul>
+			<li><b>Show buffer icons: </b> This is default behavior. The state icons of the buffers are shown next
+			to their names. Uncheck this if you work on a slow computer and the dialog renders slowly.</li>
+			<li><b>Show files in the colours defined by the file system browser: </b> If you have defined any colours
+			in the jEdit file system browser, checking this setting will list the files in the SwitchBuffer dialog
+			using those colours.</li>
+			<li><b>Show directories: </b> This determines whether SwitchBuffer will display the directory of the buffers
+			in the file list.</li>
+			<li><b>Crop common directory: </b> If the above 'Show directories' option is checked, checking this option
+			will remove any common directories from the beginning of the directories displayed by SwitchBuffer and only
+			show the parts that differ. This is useful if the files being edited are in a deep directory tree and the
+			end of the path is more important than the beginning in determining which file to select in the file list.
+			If this option is checked, the cropped directory will be displayed in the title bar of the SwitchBuffer dialog.</li>
+			<li><b>Remove currently active buffer from list: </b> This option will stop the currently active buffer (the
+			buffer you are currently working on in the jEdit text area) from appearing in the list of files that appear
+			in the SwitchBuffer dialog.</li>
+		</ul>
+		<h3>Previously open buffers:</h3>
+		<ul>
+			<li><b>Remember previous buffer: </b> This option will make SwitchBuffer automatically remember the text that
+			you enter in the textbox at the top of the SwitchBuffer dialog.</li>
+			<li><b>...even if not switched by SwitchBuffer: </b> The above option will remember the file name of previous
+			file only if switched using SwitchBuffer.  This option will make SwitchBuffer listen for when the buffer is
+			changed using other means.  This means that SwitchBuffer will always display the last accessed buffer in the
+			textbox no matter how it was switched. </li>
+			<li><b>Remember any text entered: </b> If SwitchBuffer isn't configured to remember the last accessed buffer
+			(using the above two options), this option will make SwitchBuffer remember any text entered in the textbox.</li>
+		</ul>
+
+		<h2>License</h2>
+		<p>The source code is distributed under the GPL. Please have a look at:
+			<a href="http://www.fsf.org/copyleft/gpl.html">http://www.fsf.org/copyleft/gpl.html</a>
+		</p>
+
+		<h2>Feedback</h2>
+		<p>The preferred way to send bug reports is to use the <b>
+		<a href="http://sourceforge.net/tracker/?group_id=588&atid=565475&func=browse">Sourceforge Plugin Bug Tracker</a></b>.
+		</p>
+		<p>You can also write to:
+			<ul>
+				<li>Lee Turner <a href="mailto:lee@leeturner.org"><em>&lt;lee@leeturner.org&gt;</em></a>, or</li>
+				<li>jEdit Users List &lt;<i>jedit-users@lists.sourceforge.net</i>&gt;, or</li>
+				<li>jEdit Devel List &lt;<i>jedit-devel@lists.sourceforge.net</i>&gt;</li>
+			</ul>
+		</p>
+	</body>
+</html>

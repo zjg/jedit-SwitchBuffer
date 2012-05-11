@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<!-- {{{ header
+ * :tabSize=2:indentSize=2:noTabs=false:folding=explicit:collapseFolds=1:
+ *
+ * build.xml - build file for the SwitchBuffer plugin
+ * Copyright (C) 2002 Lee Turner
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * }}}
+-->
+
+<project name="SwitchBuffer" default="dist" basedir=".">
+
+	<!-- {{{ Properties -->
+	<!-- load machine-specific properties -->
+	<property file="build.properties"/>
+	<property file="../build.properties"/>
+	<property file="${user.home}/.build.properties"/>
+	<property file="${user.home}/build.properties"/>
+
+	<!-- these values can be overridden by the above files -->
+	<property name="plugin.name" value="SwitchBuffer"/>
+	<property name="jar.name" value="${plugin.name}.jar"/>
+	<property name="src.dir" value="."/>
+	<property name="build.dir" value="build"/>
+	<property name="classes.dir" value="${build.dir}/classes"/>
+	<property name="dist.dir" value="${build.dir}/dist"/>
+	<property name="dist.bin.dir" value="${dist.dir}/bin"/>
+	<property name="dist.complete.dir" value="${dist.dir}/complete"/>
+	<property name="doc.dir"  value="${build.dir}/api-docs"/>
+	<property name="install.dir" value=".."/>
+	<property name="plugin.version" value="1.1.1"/>
+	<!-- }}} -->
+
+	<!-- {{{ Patterns -->
+	<patternset id="include-from-source">
+		<include name="**/*.html"/>
+		<include name="dockables.xml"/>
+		<include name="actions.xml"/>
+		<include name="**/*.props"/>
+	</patternset>
+	<!-- }}} -->
+
+	<!-- {{{ Paths -->
+	<path id="project.class.path">
+		<pathelement location="${jedit.install.dir}/jedit.jar"/>
+		<pathelement location="${src.dir}"/>
+	</path>
+	<!-- }}} -->
+
+	<!-- {{{ Targets -->
+	<!-- {{{ 'init' target -->
+	<target name="init">
+		<mkdir dir="${classes.dir}"/>
+	</target>
+	<!-- }}} -->
+
+	<!-- {{{ 'compile' target -->
+	<target name="compile" depends="init" description="Compile project files">
+		<javac
+			srcdir="${src.dir}" destdir="${classes.dir}" deprecation="on" includeJavaRuntime="yes">
+			<classpath refid="project.class.path"/>
+		</javac>
+	</target>
+	<!-- }}} -->
+
+	<!-- {{{ 'build' target -->
+	<target name="build" depends="compile" description="Builds the plugin jar">
+		<jar jarfile="${build.dir}/${jar.name}">
+			<fileset dir="${classes.dir}"/>
+			<fileset dir="${src.dir}">
+				<patternset refid="include-from-source"/>
+			</fileset>
+		</jar>
+	</target>
+	<!-- }}} -->
+
+	<!-- {{{ 'dist' target -->
+	<target name="dist" depends="build" description="Copies the jar to the plugins dir">
+		<copy todir="${install.dir}">
+			<fileset dir="${build.dir}">
+				<include name="${jar.name}"/>
+			</fileset>
+		</copy>
+	</target>
+	<!-- }}} -->
+
+	<!-- {{{ 'distcomplete' target -->
+	<target name="distcomplete" depends="build" description="builds the complete distributions">
+		<property name="complete.plugin.name" value="${plugin.name}-${plugin.version}"/>
+
+		<delete dir="${dist.complete.dir}"/>
+		<mkdir dir="${dist.complete.dir}"/>
+
+		<!-- First lets make the zip archive -->
+		<zip destfile="${dist.complete.dir}/${complete.plugin.name}.zip">
+			<zipfileset dir="${build.dir}" includes="${jar.name}"/>
+			<zipfileset dir="." includes="*.* **/*.java" prefix="${plugin.name}"/>
+		</zip>
+
+		<!-- Now lets make the tgz archive -->
+		<tar destfile="${dist.complete.dir}/${complete.plugin.name}.tar">
+			<tarfileset dir="${build.dir}" includes="${jar.name}"/>
+			<tarfileset dir="." includes="*.* **/*.java" prefix="${plugin.name}"/>
+		</tar>
+		<!--<tar destfile="${dist.complete.dir}/${complete.plugin.name}.tar"
+				 basedir="${build.dir}"
+				 includes="${jar.name}"/>-->
+		<gzip src="${dist.complete.dir}/${complete.plugin.name}.tar" zipfile="${dist.complete.dir}/${complete.plugin.name}.tar.gz" />
+
+		<!-- Clean up after ourselves -->
+		<delete file="${dist.complete.dir}/${complete.plugin.name}.tar"/>
+	</target>
+	<!-- }}} -->
+
+	<!-- {{{ 'distbin' target -->
+	<target name="distbin" depends="build" description="builds the binary distributions">
+
+		<property name="bin.plugin.name" value="${plugin.name}-${plugin.version}-bin"/>
+
+		<delete dir="${dist.bin.dir}"/>
+		<mkdir dir="${dist.bin.dir}"/>
+
+		<!-- First lets make the zip archive -->
+		<zip destfile="${dist.bin.dir}/${bin.plugin.name}.zip"
+				 basedir="${build.dir}"
+				 includes="${jar.name}"/>
+
+		<!-- Now lets make the tgz archive -->
+		<tar destfile="${dist.bin.dir}/${bin.plugin.name}.tar"
+				 basedir="${build.dir}"
+				 includes="${jar.name}"/>
+		<gzip src="${dist.bin.dir}/${bin.plugin.name}.tar" zipfile="${dist.bin.dir}/${bin.plugin.name}.tar.gz" />
+
+		<!-- Clean up after ourselves -->
+		<delete file="${dist.bin.dir}/${bin.plugin.name}.tar"/>
+	</target>
+	<!-- }}} -->
+
+	<!--{{{ 'javadoc' target -->
+	<target name="javadoc">
+		<delete dir="${doc.dir}"/>
+		<mkdir dir="${doc.dir}"/>
+		<javadoc
+			packagenames="switchbuffer.*"
+			sourcepath="${src.dir}"
+			destdir="${doc.dir}"
+			classpathref="project.class.path"
+			author="true"
+			version="true"
+			use="true"
+			windowtitle="SwitchBuffer Plugin API reference"
+			doctitle="SwitchBuffer"
+			bottom="SwitchBuffer is distributed under the GNU GENERAL PUBLIC LICENSE"
+		/>
+	</target>
+	<!--}}}-->
+
+		<!-- {{{ 'all' target -->
+	<target name="all" description="Calls all build targets">
+		<antcall target="distbin"/>
+		<antcall target="distcomplete"/>
+		<antcall target="javadoc"/>
+	</target>
+	<!-- }}} -->
+
+	<!-- {{{ 'clean' target -->
+	<target name="clean" description="Clean project directory">
+		<delete dir="${build.dir}"/>
+	</target>
+	<!-- }}} -->
+	<!-- }}} -->
+
+</project>

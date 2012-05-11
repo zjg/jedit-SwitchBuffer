@@ -1,0 +1,92 @@
+SwitchBuffer Plugin Change Log
+:noTabs=false:folding=explicit:collapseFolds=1:
+
+{{{ version 1.1.1
+
+{{{+ enhancements:
+ - Updated to the new jEdit 4.2 API.  Now requires jEdit 4.2 pre 4
+}}}
+
+}}}
+
+{{{ version 1.1.0
+
+{{{+ enhancements:
+ - Implemented a file suffix switch.  If invoked, SwitchBuffer will look
+   for any other open buffers that have the same name as the current
+   buffer, but with a different suffix.  If only one other buffer is found
+   SwitchBuffer will switch to that buffer automatically, otherwise the
+   SwitchBuffer dialog will be displayed allowing the user to select the
+   buffer they want.
+
+ - Added the ability to display the list of open buffers in the colours
+   defined by the jEdit file system browser.  This is a configurable
+   option.
+
+ - Added the option to configure what happens when the SwitchBuffer
+   dialog loses focus.  The window can be hidden or remain visible.
+
+ - Added the ability to open buffers using a click of the left mouse
+   button
+
+ - Added the option to remove the currently active buffer from the list
+   of files displayed.
+
+ - Added the ability to close the buffers listed in the file list.
+   This functionality is bound to the CTRL-W key combination or by
+   right clicking on a buffer name in the list.
+
+ - Added the option to allow SwitchBuffer to listen for EditBus message
+   to trap when the buffer is changed by some other means.  This means
+   that SwitchBuffer will always display the last accessed buffer in
+   the textbox no matter how it was accessed.
+
+ - If SwitchBuffer is not configured to remember the previous buffer
+   opened, an option has been added to make it remember any text entered
+   into the textbox.
+
+ - Added two new filename matching options:
+   + match only at the beginning of the filename.
+   + perform a subsequence match on the filename.
+
+ - Add the option to configure whether to display the directories of the
+   open buffers in the file list.
+
+ - If directories are being displayed, added the option to crop common
+   directories.  This is useful if the files being edited are in a deep
+   directory tree and the end of the path is more important than the beginning
+   in determining which file to select in the file list.
+
+ - Updated the text on the buttons to make them more consistent with other
+   jEdit dialogs.
+
+ - General tidy up of option pane.
+}}}
+
+}}}
+
+{{{ initial release - version 1.0.0
+
+{{{ + features:
+ - Dialog displayed allowing the user to enter the name of an open buffer.
+
+ - The list of buffers below is correspondingly updated to feature only those
+   buffers whose names contain what you have typed. The first buffer in the
+   list is always selected.
+
+ - The highlighted buffer can be selected by hitting the enter key.
+
+ - The up/down keys or the shortcuts alt+i/alt+k can be used to select the
+   previous and next buffers displayed in the list.
+
+ - The previous buffer is remembered and displayed in the text field, so you
+   can simply switch to the previous buffer that you were in by hitting Enter.
+
+ - The SwitchBuffer dialog also remembers the size and position that the user
+   previously set for it.
+
+ - Options to ignore case of the file typed in and to show the buffer icons of
+   the open buffers displayed in the list.
+}}}
+
+}}}

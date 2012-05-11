@@ -1,0 +1,86 @@
+# {{{ header
+# :tabSize=4:indentSize=4:noTabs=false:folding=explicit:collapseFolds=1:
+#
+# SwitchBuffer.props - Properties file for the SwitchBuffer plugin
+# Copyright (c) 2002 Lee Turner
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+# }}}
+
+#{{{ plugin properties
+plugin.switchbuffer.SwitchBufferPlugin.activate=defer
+
+plugin.switchbuffer.SwitchBufferPlugin.name=SwitchBuffer
+plugin.switchbuffer.SwitchBufferPlugin.author=Lee Turner, Tarun Ramakrishna Elankath
+plugin.switchbuffer.SwitchBufferPlugin.version=1.1.1
+plugin.switchbuffer.SwitchBufferPlugin.docs=switchbuffer.html
+plugin.switchbuffer.SwitchBufferPlugin.depend.0=jdk 1.3
+plugin.switchbuffer.SwitchBufferPlugin.depend.1=jedit 04.02.04.00
+
+plugin.switchbuffer.SwitchBufferPlugin.menu=switchbuffer.display-dialog \
+	- \
+	switchbuffer.file-suffix-switch
+
+plugin.switchbuffer.SwitchBufferPlugin.option-pane=switchbuffer
+#}}}
+
+#{{{ action labels
+switchbuffer.display-dialog.label=Show Switch Buffer
+switchbuffer.file-suffix-switch.label=File Suffix Switch
+#}}}
+
+#{{{ option pane
+options.switchbuffer.code=new switchbuffer.SwitchBufferOptionPane();
+
+options.switchbuffer.label=Switch Buffer
+
+switchbuffer.options.general.title=General Options
+switchbuffer.options.general.lost-focus.title=On loss of focus, hide switchbuffer window
+switchbuffer.options.general.lost-focus=true
+
+switchbuffer.options.filenameMatching.title=Filename matching options
+switchbuffer.options.filenameMatching=ANYWHERE
+switchbuffer.options.filenameMatchingBeginning.title=Beginning of filename
+switchbuffer.options.filenameMatchingAnywhere.title=Anywhere in filename
+switchbuffer.options.filenameMatchingSubSequence.title=SubSequence match
+switchbuffer.options.ignore-case=true
+switchbuffer.options.ignore-case.title=Ignore case
+
+switchbuffer.options.fileList.title=File list options
+switchbuffer.options.show-buffer-icons=true
+switchbuffer.options.show-buffer-icons.title=Show buffer icons
+switchbuffer.options.show-buffer-directories=true
+switchbuffer.options.show-buffer-directories.title=Show directories
+switchbuffer.options.show-buffer-colours=true
+switchbuffer.options.show-buffer-colours.title=Show files in the colours defined by the file system browser
+switchbuffer.options.show-intelligent-buffer-directories=false
+switchbuffer.options.show-intelligent-buffer-directories.title=Crop common directory
+switchbuffer.options.remove-active-buffer=false
+switchbuffer.options.remove-active-buffer.title=Remove currently active buffer from list
+
+switchbuffer.options.previousbuffers.title=Previously open buffers
+switchbuffer.options.remember-previous-buffer=true
+switchbuffer.options.remember-previous-buffer.title=Remember previous buffer
+switchbuffer.options.remember-previous-buffer-from-anywhere=false
+switchbuffer.options.remember-previous-buffer-from-anywhere.title=..even if not switched by SwitchBuffer
+switchbuffer.options.remember-text-entered=false
+switchbuffer.options.remember-text-entered.title=Remember any text entered
+
+switchbuffer.options.file-suffix-switch.auto-switch=true
+#}}}
+
+#{{{ other properties
+switchbuffer.inputfield-text=
+#}}}
